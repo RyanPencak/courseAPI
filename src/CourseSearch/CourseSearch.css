@@ -1,0 +1,13 @@
+.CourseSearch {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  text-align: center;
+  background-color: #363c51;
+  color: #cdd2d8;
+  box-shadow: 1px 4px 5px #999;
+  padding: 15px;
+  margin-top: 20px;
+}
