@@ -1,10 +1,7 @@
-import './CourseSearch.css';
+import './Header.css';
 import React, { Component } from 'react';
 
-export default class CourseSearch extends Component {
-
-
-
+export default class Header extends Component {
   render() {
     return(
       <div className="CourseSearch">

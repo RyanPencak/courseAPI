@@ -1,0 +1,14 @@
+.header {
+  text-align: center;
+  font-family: Montserrat;
+  /* background-color: #003865; */
+  /* border-radius: 100px; */
+  color: #E87722;
+  /* box-shadow: 1px 4px 5px #999; */
+  padding: 15px;
+  margin: 20px 10px 20px 10px;
+}
+
+.header h1 {
+  font-size: 60px;
+}

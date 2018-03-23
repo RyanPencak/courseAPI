@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import CourseSearch from '../CourseSearch/CourseSearch.js';
+import Header from '../Header/Header.js'
+import CourseForm from '../CourseForm/CourseForm.js'
+// import CourseSearch from '../CourseSearch/CourseSearch.js';
 
 class App extends Component {
 
@@ -10,7 +12,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <CourseSearch />
+        <Header />
+        <CourseForm />
+        {/* <CourseSearch /> */}
       </div>
     );
   }
