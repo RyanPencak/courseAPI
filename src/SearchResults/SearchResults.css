@@ -1,4 +1,4 @@
-.CourseSearch {
+.SearchResults {
   display: flex;
   flex-direction: column;
 }
@@ -7,4 +7,13 @@
   text-align: center;
   padding: 15px;
   margin-top: 20px;
+}
+
+#course {
+  font-family: Montserrat;
+  color: black;
+  border-radius: 20px;
+  background-color: #8498ba;
+  padding: 15px;
+  margin: 20px 10px 20px 10px;
 }

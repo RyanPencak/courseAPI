@@ -1,4 +1,6 @@
 import './CourseForm.css';
+// import departmentInfo from './Data.js';
+import SearchResults from '../SearchResults/SearchResults.js'
 import React, { Component } from 'react';
 import { Form, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 
@@ -8,8 +10,10 @@ export default class CourseForm extends Component {
     super();
 
     this.state = {
+
       courseData: [],
       selectedCourses: [],
+      resultsDisplayed: false,
       year: '',
       semester: '',
       department: '',
@@ -38,9 +42,9 @@ export default class CourseForm extends Component {
         res.json()
           .then( data => {
             this.setState({
-              courseData: data
+              courseData: data.message
             });
-            // console.log(this.state.courseData);
+            console.log(this.state.courseData);
           })
           .catch()
 
@@ -49,19 +53,20 @@ export default class CourseForm extends Component {
   }
 
   getSearchCourses() {
-    if(this.state.professor === '') {
+    this.setState({resultsDisplayed: true});
+    if(this.state.professor === '' && this.state.days === '') {
       fetch(`http://eg.bucknell.edu:48484/q?limit=99999&Year=${this.state.year}&Semester=${this.state.semester}&Department=${this.state.department}`)
-        .then( res => {
-          res.json()
-          .then( data => {
-            this.setState({
-              selectedCourses: data
-            });
-            // console.log(this.state.selectedCourses);
-          })
-          .catch()
+      .then( res => {
+        res.json()
+        .then( data => {
+          this.setState({
+            selectedCourses: data.message
+          });
+          console.log(this.state.selectedCourses);
         })
-        .catch (error => console.log("ERROR"+error))
+        .catch()
+      })
+      .catch (error => console.log("ERROR"+error))
     }
     else {
       fetch(`http://eg.bucknell.edu:48484/q?limit=99999&Year=${this.state.year}&Semester=${this.state.semester}&Department=${this.state.department}&text=${this.state.professor}`)
@@ -69,8 +74,9 @@ export default class CourseForm extends Component {
           res.json()
           .then( data => {
             this.setState({
-              selectedCourses: data
+              selectedCourses: data.message
             });
+            console.log(this.state.selectedCourses);
           })
           .catch()
         })
@@ -121,9 +127,17 @@ export default class CourseForm extends Component {
     prof === 'wittie' || prof === 'emeriti') {
       return 'success';
     }
-    else {
-      return null;
-    }
+    // for(var i=0; i<departmentInfo.length; i++) {
+    //   if(this.state.department === departmentInfo[i].name) {
+    //     if(departmentInfo[i].professors.includes(this.state.professor.toLowerCase())) {
+    //       console.log("hi");
+    //       return 'success';
+    //     }
+    //     else {
+    //       return null;
+    //     }
+    //   }
+    // }
   }
 
   render() {
@@ -134,8 +148,8 @@ export default class CourseForm extends Component {
             <ControlLabel>Year</ControlLabel>
             <FormControl componentClass="select" placeholder="select">
               <option value="select">select</option>
-              <option value="2017">2017</option>
               <option value="2018">2018</option>
+              <option value="2019">2019</option>
             </FormControl>
           </FormGroup>
 
@@ -165,12 +179,22 @@ export default class CourseForm extends Component {
 
           <FormGroup controlId="formInlineDays" onChange={this.handleDaysChange} validationState={this.getDayValidationState()}>
             <ControlLabel>Course Days</ControlLabel>
-            <FormControl type="text" placeholder="Enter M, T, W, H, F, MWF, ..." />
+            <FormControl type="text" placeholder="Enter M, T, W, H, F, MWF, MW, TH" />
           </FormGroup>
 
-          <Button type="submit" onClick={this.getSearchCourses()}>Search</Button>
+          <Button type="button" onClick={() => {this.getSearchCourses()}}>Search</Button>
 
         </Form>
+
+        {
+          this.state.resultsDisplayed
+          ?
+          <SearchResults
+            courses={this.state.selectedCourses}
+          />
+          : null
+        }
+
       </div>
     );
   }
