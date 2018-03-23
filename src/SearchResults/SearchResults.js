@@ -6,7 +6,6 @@ export default function SearchResults(props) {
 
   return (
     <div className="SearchResults">
-
       <h1>Available Courses</h1>
       {props.courses.map(function(course, i) {
         var courseKey = 'course_'+i;
@@ -15,12 +14,12 @@ export default function SearchResults(props) {
         if(course.Room.length > 0) {
           isRoom = 1;
         }
-        var hasLab = 0;
-        var labs = [];
-        if(course.Labs.length > 0) {
-          hasLab = 1;
-          labs = course.Labs;
-        }
+        // var hasLab = 0;
+        // var labs = [];
+        // if(course.Labs.length > 0) {
+        //   hasLab = 1;
+        //   labs = course.Labs;
+        // }
         return(
           <div key={courseKey} id='course'>
             <h4>{course.Course}: {course.Title}</h4>
@@ -31,7 +30,18 @@ export default function SearchResults(props) {
               :
               null
             }
-            <p>{course.CrseDesc}</p>
+            <h2>Labs:</h2>
+            {
+              course.Labs.map(function(lab, j) {
+                var labKey = 'lab_'+j;
+                return(
+                  <div key={labKey}>
+                    <h4>{lab.Course}: {lab.Title}</h4>
+                    <h4>Meeting Time: {lab["Meeting Time"]}</h4>
+                  </div>
+                )
+              })
+            }
           </div>
         )
       })}

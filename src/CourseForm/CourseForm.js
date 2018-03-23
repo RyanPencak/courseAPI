@@ -10,7 +10,7 @@ export default class CourseForm extends Component {
     super();
 
     this.state = {
-
+      allDepartments: ['ACFM','OFFAF','AFST','ANBE','ANTH','ARBC','ARTH','ARST'],
       courseData: [],
       selectedCourses: [],
       resultsDisplayed: false,
@@ -23,6 +23,7 @@ export default class CourseForm extends Component {
 
     this.getAllCourses = this.getAllCourses.bind(this);
     this.getSearchCourses = this.getSearchCourses.bind(this);
+    this.getDepartmentValidationState = this.getDepartmentValidationState.bind(this);
     this.getDayValidationState = this.getDayValidationState.bind(this);
     this.getProfessorValidationState = this.getProfessorValidationState.bind(this);
     this.handleYearChange = this.handleYearChange.bind(this);
@@ -55,7 +56,7 @@ export default class CourseForm extends Component {
   getSearchCourses() {
     this.setState({resultsDisplayed: true});
     if(this.state.professor === '' && this.state.days === '') {
-      fetch(`http://eg.bucknell.edu:48484/q?limit=99999&Year=${this.state.year}&Semester=${this.state.semester}&Department=${this.state.department}`)
+      fetch(`https://www.eg.bucknell.edu/~amm042/service/q?limit=99999&Year=${this.state.year}&Semester=${this.state.semester}&Department=${this.state.department}`)
       .then( res => {
         res.json()
         .then( data => {
@@ -69,7 +70,7 @@ export default class CourseForm extends Component {
       .catch (error => console.log("ERROR"+error))
     }
     else {
-      fetch(`http://eg.bucknell.edu:48484/q?limit=99999&Year=${this.state.year}&Semester=${this.state.semester}&Department=${this.state.department}&text=${this.state.professor}`)
+      fetch(`https://www.eg.bucknell.edu/~amm042/service/q?limit=99999&Year=${this.state.year}&Semester=${this.state.semester}&Department=${this.state.department}&text=${this.state.professor}`)
         .then( res => {
           res.json()
           .then( data => {
@@ -104,6 +105,20 @@ export default class CourseForm extends Component {
     this.setState({ days: e.target.value });
   }
 
+  getDepartmentValidationState() {
+    const dept = this.state.department.toUpperCase();
+    const length = this.state.days.length;
+    if (this.state.allDepartments.includes(dept)) {
+      return 'success';
+    }
+    else if (length === 0){
+      return null
+    }
+    else {
+      return 'error';
+    }
+  }
+
   getDayValidationState() {
     const days = this.state.days.toUpperCase();
     const length = this.state.days.length;
@@ -120,22 +135,37 @@ export default class CourseForm extends Component {
 
   getProfessorValidationState() {
     const prof = this.state.professor.toLowerCase();
-    // const length = this.state.professor.length;
-    if (prof === 'baish' || prof === 'bedi' || prof === 'dancy' || prof === 'guattery' ||
-    prof === 'hamid' || prof === 'king' || prof === 'marchiori' || prof === 'mir' ||
-    prof === 'meng' || prof === 'peck' || prof === 'ritter' || prof === 'scherr' || prof === 'stough' ||
-    prof === 'wittie' || prof === 'emeriti') {
-      return 'success';
+    if(this.state.department === 'CSCI') {
+      if(prof === 'baish' || prof === 'bedi' || prof === 'dancy' || prof === 'guattery' ||
+      prof === 'hamid' || prof === 'king' || prof === 'marchiori' || prof === 'mir' ||
+      prof === 'meng' || prof === 'peck' || prof === 'ritter' || prof === 'scherr' || prof === 'stough' ||
+      prof === 'wittie' || prof === 'emeriti') {
+        return 'success';
+      }
+      else {
+        return null;
+      }
+    }
+    else if(this.state.department === 'ECEG') {
+      if(prof === 'baish' || prof === 'bedi' || prof === 'dancy' || prof === 'guattery' ||
+      prof === 'hamid' || prof === 'king' || prof === 'marchiori' || prof === 'mir' ||
+      prof === 'meng' || prof === 'peck' || prof === 'ritter' || prof === 'scherr' || prof === 'stough' ||
+      prof === 'wittie' || prof === 'emeriti') {
+        return 'success';
+      }
+      else {
+        return null;
+      }
+    }
+    else {
+      return null;
     }
     // for(var i=0; i<departmentInfo.length; i++) {
-    //   if(this.state.department === departmentInfo[i].name) {
-    //     if(departmentInfo[i].professors.includes(this.state.professor.toLowerCase())) {
-    //       console.log("hi");
-    //       return 'success';
-    //     }
-    //     else {
-    //       return null;
-    //     }
+    //   if((departmentInfo[i].name === this.state.department.toUpperCase()) && (departmentInfo[i].professors.includes(this.state.professor.toLowerCase()))) {
+    //     return 'success';
+    //   }
+    //   else {
+    //     return null;
     //   }
     // }
   }
@@ -166,20 +196,26 @@ export default class CourseForm extends Component {
             <ControlLabel>Department</ControlLabel>
             <FormControl componentClass="select" placeholder="select">
               <option value="select">select</option>
-              <option value="CSCI">CSCI (Computer Science)</option>
-              <option value="ECEG">ECEG (Electrical Engineering)</option>
-              <option value="ECON">ECON (Economics)</option>
+              <option value="ACFM">ACFM</option>
+              <option value="CSCI">CSCI</option>
+              <option value="ECEG">ECEG</option>
+              <option value="ECON">ECON</option>
             </FormControl>
           </FormGroup>
 
+          {/* <FormGroup controlId="formInlineDays" onChange={this.handleDepartmentChange} validationState={this.getDepartmentValidationState()}>
+            <ControlLabel>Department</ControlLabel>
+            <FormControl type="text" placeholder="Department: ACFM, CSCI, etc." />
+          </FormGroup> */}
+
           <FormGroup controlId="formInlineDays" onChange={this.handleProfessorChange} validationState={this.getProfessorValidationState()}>
             <ControlLabel>Professor</ControlLabel>
-            <FormControl type="text" placeholder="Professor Last Name" />
+            <FormControl type="text" placeholder="--Optional-- Professor Last Name" />
           </FormGroup>
 
           <FormGroup controlId="formInlineDays" onChange={this.handleDaysChange} validationState={this.getDayValidationState()}>
             <ControlLabel>Course Days</ControlLabel>
-            <FormControl type="text" placeholder="Enter M, T, W, H, F, MWF, MW, TH" />
+            <FormControl type="text" placeholder="--Optional-- Days: M, T, W, H, F, MWF, MW, TH" />
           </FormGroup>
 
           <Button type="button" onClick={() => {this.getSearchCourses()}}>Search</Button>
