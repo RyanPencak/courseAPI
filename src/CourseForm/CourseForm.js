@@ -38,7 +38,7 @@ export default class CourseForm extends Component {
   }
 
   getAllCourses() {
-    fetch('http://eg.bucknell.edu:48484/q?limit=99999')
+    fetch('https://www.eg.bucknell.edu/~amm042/service/q?limit=99999')
       .then( res => {
         res.json()
           .then( data => {
