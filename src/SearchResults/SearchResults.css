@@ -1,38 +1,23 @@
-.SearchResults {
-  /* display: flex;
-  flex-direction: column;
-  font-size: 18px;
-  border-radius: 20px;
-  background-color: #c8cbd1;
-  color: #003865;
-  box-shadow: 1px 4px 5px #999;
-  padding: 30px 50px 30px 50px;
-  margin: 20px 10px 20px 10px; */
+.SearchResults .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.SearchResults .header Button {
+  height: 50px;
+  width: 50px;
 }
 
 .SearchResults .results {
   font-size: 18px;
   border-radius: 20px;
   background-color: #c8cbd1;
-  /* background-color: #003865; */
-  /* color: #E87722; */
   color: #003865;
   box-shadow: 1px 4px 5px #999;
   padding: 30px 50px 30px 50px;
   margin: 20px 10px 20px 10px;
-}
-
-.SearchResults .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  /* padding: 15px; */
-  /* margin-top: 20px; */
-}
-
-.SearchResults .header Button {
-  height: 50px;
-  width: 50px;
 }
 
 .SearchResults .allCourses {
@@ -56,7 +41,7 @@
   font-family: Montserrat;
   color: black;
   border-radius: 20px;
-  background-color: white;
+  background-color: #d7dae1;
   padding: 15px;
   margin: 20px 10px 20px 10px;
 }
