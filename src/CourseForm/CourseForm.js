@@ -2,7 +2,8 @@ import './CourseForm.css';
 import SearchResults from '../SearchResults/SearchResults.js'
 import React, { Component } from 'react';
 import ReactLoading from 'react-loading';
-import { Form, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
+import Delay from 'react-delay';
+import { Form, FormGroup, ControlLabel, FormControl, Button, Glyphicon } from 'react-bootstrap';
 
 export default class CourseForm extends Component {
 
@@ -206,7 +207,7 @@ export default class CourseForm extends Component {
 
   getProfessorValidationState() {
     if(this.state.searchQueries.professor && this.state.searchQueries.professor.substring(6)) {
-      let prof = this.state.searchQueries.professor.substring(6);
+      let prof = this.state.searchQueries.professor.substring(6).toLowerCase();
 
       if (ProfessorsList.includes(prof)) {
         return 'success';
@@ -406,8 +407,15 @@ export default class CourseForm extends Component {
             ((this.state.loading) && (this.state.selectedCourses.length === 0))
             ?
             <div className="loading">
-              <ReactLoading id="load_icon" type='spinningBubbles' color='#003865' height='100px' width='100px' />
-              <h3> No Courses Found </h3>
+              <ReactLoading id="load_icon" delay='0' type='cubes' color='#003865' height='100px' width='100px' />
+              <div className="returnButton">
+                <Button bsStyle="primary" onClick={() => {this.handleSearchButton()}}><Glyphicon glyph="search" /></Button>
+              </div>
+              <Delay wait={3000}>
+                <div className="notFound">
+                  <h3> No Courses Found </h3>
+                </div>
+              </Delay>
             </div>
             : null
         }
