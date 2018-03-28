@@ -411,7 +411,7 @@ export default class CourseForm extends Component {
               <div className="returnButton">
                 <Button bsStyle="primary" onClick={() => {this.handleSearchButton()}}><Glyphicon glyph="search" /></Button>
               </div>
-              <Delay wait={3000}>
+              <Delay wait={5000}>
                 <div className="notFound">
                   <h3> No Courses Found </h3>
                 </div>
