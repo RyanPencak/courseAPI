@@ -407,7 +407,7 @@ export default class CourseForm extends Component {
             ((this.state.loading) && (this.state.selectedCourses.length === 0))
             ?
             <div className="loading">
-              <ReactLoading id="load_icon" delay='0' type='cubes' color='#003865' height='100px' width='100px' />
+              <ReactLoading id="load_icon" delay={0} type='cubes' color='#003865' height='100px' width='100px' />
               <div className="returnButton">
                 <Button bsStyle="primary" onClick={() => {this.handleSearchButton()}}><Glyphicon glyph="search" /></Button>
               </div>
