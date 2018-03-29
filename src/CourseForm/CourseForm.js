@@ -20,8 +20,6 @@ export default class CourseForm extends Component {
     };
 
     // this.getAllCourses = this.getAllCourses.bind(this);
-    // this.getDepartmentValidationState = this.getDepartmentValidationState.bind(this);
-    // this.getDayValidationState = this.getDayValidationState.bind(this);
     this.getSearchCourses = this.getSearchCourses.bind(this);
     this.getProfessorValidationState = this.getProfessorValidationState.bind(this);
     this.handleYearChange = this.handleYearChange.bind(this);
@@ -33,11 +31,6 @@ export default class CourseForm extends Component {
     this.handleSearchButton = this.handleSearchButton.bind(this);
 
   }
-
-  // componentDidMount() {
-    // this.setState({courseData: this.getAllCourses()});
-    // this.setState({professorList: AllProfessors})
-  // }
 
   // getAllCourses() {
   //   fetch('https://www.eg.bucknell.edu/~amm042/service/q?limit=99999')
@@ -58,13 +51,11 @@ export default class CourseForm extends Component {
     let url = 'https://www.eg.bucknell.edu/~amm042/service/q?limit=99999';
     const queries = this.state.searchQueries;
     for(const key in queries) {
-      // console.log(queries[key]);
       if(queries[key]) {
         let q = queries[key];
         url += q;
       }
     }
-    // console.log(url);
 
     fetch(url)
     .then( res => {
@@ -73,7 +64,6 @@ export default class CourseForm extends Component {
         this.setState({
           selectedCourses: data.message
         });
-        // console.log(this.state.selectedCourses);
       })
       .catch()
     })
@@ -177,34 +167,6 @@ export default class CourseForm extends Component {
     this.setState({ days: e.target.value });
   }
 
-  // getDepartmentValidationState() {
-  //   const dept = this.state.department.toUpperCase();
-  //   const length = this.state.days.length;
-  //   if (this.state.allDepartments.includes(dept)) {
-  //     return 'success';
-  //   }
-  //   else if (length === 0){
-  //     return null
-  //   }
-  //   else {
-  //     return 'error';
-  //   }
-  // }
-
-  // getDayValidationState() {
-  //   const days = this.state.days.toUpperCase();
-  //   const length = this.state.days.length;
-  //   if (days === 'M' || days === 'T' || days === 'W' || days === 'R' || days === 'F' || days === 'MWF' || days === 'MW' || days === 'TH') {
-  //     return 'success';
-  //   }
-  //   else if (length === 0){
-  //     return null
-  //   }
-  //   else {
-  //     return 'error';
-  //   }
-  // }
-
   getProfessorValidationState() {
     if(this.state.searchQueries.professor && this.state.searchQueries.professor.substring(6)) {
       let prof = this.state.searchQueries.professor.substring(6).toLowerCase();
@@ -216,40 +178,6 @@ export default class CourseForm extends Component {
         return null;
       }
     }
-    // const dept = this.state.searchQueries.department.toUpperCase();
-    // if(dept === 'CSCI') {
-    //   if(prof === 'baish' || prof === 'bedi' || prof === 'dancy' || prof === 'guattery' ||
-    //   prof === 'hamid' || prof === 'king' || prof === 'marchiori' || prof === 'mir' ||
-    //   prof === 'meng' || prof === 'peck' || prof === 'ritter' || prof === 'scherr' || prof === 'stough' ||
-    //   prof === 'wittie' || prof === 'emeriti') {
-    //     return 'success';
-    //   }
-    //   else {
-    //     return null;
-    //   }
-    // }
-    // else if(this.state.department === 'ECEG') {
-    //   if(prof === 'baish' || prof === 'bedi' || prof === 'dancy' || prof === 'guattery' ||
-    //   prof === 'hamid' || prof === 'king' || prof === 'marchiori' || prof === 'mir' ||
-    //   prof === 'meng' || prof === 'peck' || prof === 'ritter' || prof === 'scherr' || prof === 'stough' ||
-    //   prof === 'wittie' || prof === 'emeriti') {
-    //     return 'success';
-    //   }
-    //   else {
-    //     return null;
-    //   }
-    // }
-    // else {
-    //   return null;
-    // }
-    // for(var i=0; i<departmentInfo.length; i++) {
-    //   if((departmentInfo[i].name === this.state.department.toUpperCase()) && (departmentInfo[i].professors.includes(this.state.professor.toLowerCase()))) {
-    //     return 'success';
-    //   }
-    //   else {
-    //     return null;
-    //   }
-    // }
   }
 
   handleSubmit(e) {
@@ -277,123 +205,117 @@ export default class CourseForm extends Component {
         ?
           <div className="form">
             <Form onSubmit={this.handleSubmit}>
-              <FormGroup controlId="formSelectYear">
-                <ControlLabel>Year</ControlLabel>
-                <FormControl componentClass="select" placeholder="select" onChange={this.handleYearChange}>
-                  <option value="select"></option>
-                  <option value="2018">2018</option>
-                  <option value="2019">2019</option>
-                </FormControl>
-              </FormGroup>
+              <div className="dropdown">
+                <FormGroup controlId="formSelectYear">
+                  <ControlLabel>Year</ControlLabel>
+                  <FormControl componentClass="select" placeholder="select" onChange={this.handleYearChange}>
+                    <option value="select"></option>
+                    <option value="2018">2018</option>
+                    <option value="2019">2019</option>
+                  </FormControl>
+                </FormGroup>
 
-              <FormGroup controlId="formSelectSemester" onChange={this.handleSemesterChange}>
-                <ControlLabel>Semester</ControlLabel>
-                <FormControl componentClass="select" placeholder="select">
-                  <option value="select"></option>
-                  <option value="Fall">Fall</option>
-                  <option value="Spring">Spring</option>
-                </FormControl>
-              </FormGroup>
+                <FormGroup controlId="formSelectSemester" onChange={this.handleSemesterChange}>
+                  <ControlLabel>Semester</ControlLabel>
+                  <FormControl componentClass="select" placeholder="select">
+                    <option value="select"></option>
+                    <option value="Fall">Fall</option>
+                    <option value="Spring">Spring</option>
+                  </FormControl>
+                </FormGroup>
 
-              <FormGroup controlId="formSelectDepartment" onChange={this.handleDepartmentChange}>
-                <ControlLabel>Department</ControlLabel>
-                <FormControl componentClass="select" placeholder="select">
-                  <option value="select"></option>
-                  <option value="ACFM">ACFM (Acct & Financial Management)</option>
-                  <option value="OFFAF">OFFAF (Africa)</option>
-                  <option value="AFST">AFST (Africana Studies)</option>
-                  <option value="ANBE">ANBE (Animal Behavior)</option>
-                  <option value="ANTH">ANTH (Anthropology)</option>
-                  <option value="ARBC">ARBC (Arabic)</option>
-                  <option value="ARTH">ARTH (Art History)</option>
-                  <option value="ARST">ARST (Art Studio)</option>
-                  <option value="ASTR">ASTR (Astronomy)</option>
-                  <option value="BIOL">BIOL (Biology)</option>
-                  <option value="BMEG">BMEG (Biomedical Engineering)</option>
-                  <option value="OFFL">OFFL (Bucknell London Semester)</option>
-                  <option value="OFFD">OFFD (Bucknell en Espana (Granada))</option>
-                  <option value="OFFF">OFFF (Bucknell en France)</option>
-                  <option value="OFFAT">OFFAT (Bucknell in Athens)</option>
-                  <option value="OFFGH">OFFGH (Bucknell in Ghana)</option>
-                  <option value="OFFG">OFFG (Bucknell in Nicaragua)</option>
-                  <option value="OFFCB">OFFCB (Caribbean)</option>
-                  <option value="CHEG">CHEG (Chemical Engineering)</option>
-                  <option value="CHEM">CHEM (Chemistry)</option>
-                  <option value="CHIN">CHIN (Chinese)</option>
-                  <option value="CEEG">CEEG (Civil & Environmental Engr.)</option>
-                  <option value="CLAS">CLAS (Classics)</option>
-                  <option value="CSCI">CSCI (Computer Science)</option>
-                  <option value="ENCW">ENCW (Creative Writing)</option>
-                  <option value="DANC">DANC (Dance)</option>
-                  <option value="OFFDN">OFFDN (Denmark Program)</option>
-                  <option value="EAST">EAST (East Asian Studies)</option>
-                  <option value="ECON">ECON (Economics)</option>
-                  <option value="EDUC">EDUC (Education)</option>
-                  <option value="ECEG">ECEG (Electrical & Computer Engr.)</option>
-                  <option value="ENGR">ENGR (Engineering)</option>
-                  <option value="ENGL">ENGL (English)</option>
-                  <option value="ENST">ENST (Environmental Studies)</option>
-                  <option value="ENFS">ENFS (Film/Media Studies)</option>
-                  <option value="FOUN">FOUN (Foundation Seminar)</option>
-                  <option value="FREN">FREN (French)</option>
-                  <option value="GEOG">GEOG (Geography)</option>
-                  <option value="GEOL">GEOL (Geology)</option>
-                  <option value="GRMN">GRMN (German)</option>
-                  <option value="GLBM">GLBM (Global Management)</option>
-                  <option value="GREK">GREK (Greek)</option>
-                  <option value="HEBR">HEBR (Hebrew)</option>
-                  <option value="HIST">HIST (History)</option>
-                  <option value="HUMN">HUMN (Humanities)</option>
-                  <option value="IDPT">IDPT (Interdepartmental)</option>
-                  <option value="IREL">IREL (International Relations)</option>
-                  <option value="ITAL">ITAL (Italian)</option>
-                  <option value="OFFJP">OFFJP (Japan)</option>
-                  <option value="JAPN">JAPN (Japanese)</option>
-                  <option value="LATN">LATN (Latin)</option>
-                  <option value="LAMS">LAMS (Latin American Studies)</option>
-                  <option value="LEGL">LEGL (Legal Studies)</option>
-                  <option value="LING">LING (Linguistics)</option>
-                  <option value="ENLS">ENLS (Literary Studies)</option>
-                  <option value="MGMT">MGMT (Management)</option>
-                  <option value="MSUS">MSUS (Managing for Sustainability)</option>
-                  <option value="MIDE">MIDE (Markets, Innovation & Design)</option>
-                  <option value="MATH">MATH (Mathematics)</option>
-                  <option value="MECH">MECH (Mechanical Engineering)</option>
-                  <option value="MILS">MILS (Military Science)</option>
-                  <option value="MUSC">MUSC (Music)</option>
-                  <option value="NEUR">NEUR (Neuroscience)</option>
-                  <option value="OCST">OCST (Off Campus Study)</option>
-                  <option value="PHIL">PHIL (Philosophy)</option>
-                  <option value="PHYS">PHYS (Physics)</option>
-                  <option value="POLS">POLS (Political Science)</option>
-                  <option value="PSYC">PSYC (Psychology)</option>
-                  <option value="RELI">RELI (Religion)</option>
-                  <option value="RESC">RESC (Residential Colleges)</option>
-                  <option value="RUSS">RUSS (Russian)</option>
-                  <option value="SIGN">SIGN (Sign Language)</option>
-                  <option value="SOCI">SOCI (Sociology)</option>
-                  <option value="SPAN">SPAN (Spanish)</option>
-                  <option value="SLIF">SLIF (Student Life)</option>
-                  <option value="THEA">THEA (Theatre)</option>
-                  <option value="UNIV">UNIV (University Course)</option>
-                  <option value="WMST">WMST (Women's and Gender Studies)</option>
-                </FormControl>
-              </FormGroup>
+                <FormGroup controlId="formSelectDepartment" onChange={this.handleDepartmentChange}>
+                  <ControlLabel>Department</ControlLabel>
+                  <FormControl componentClass="select" placeholder="select">
+                    <option value="select"></option>
+                    <option value="ACFM">ACFM (Acct & Financial Management)</option>
+                    <option value="OFFAF">OFFAF (Africa)</option>
+                    <option value="AFST">AFST (Africana Studies)</option>
+                    <option value="ANBE">ANBE (Animal Behavior)</option>
+                    <option value="ANTH">ANTH (Anthropology)</option>
+                    <option value="ARBC">ARBC (Arabic)</option>
+                    <option value="ARTH">ARTH (Art History)</option>
+                    <option value="ARST">ARST (Art Studio)</option>
+                    <option value="ASTR">ASTR (Astronomy)</option>
+                    <option value="BIOL">BIOL (Biology)</option>
+                    <option value="BMEG">BMEG (Biomedical Engineering)</option>
+                    <option value="OFFL">OFFL (Bucknell London Semester)</option>
+                    <option value="OFFD">OFFD (Bucknell en Espana (Granada))</option>
+                    <option value="OFFF">OFFF (Bucknell en France)</option>
+                    <option value="OFFAT">OFFAT (Bucknell in Athens)</option>
+                    <option value="OFFGH">OFFGH (Bucknell in Ghana)</option>
+                    <option value="OFFG">OFFG (Bucknell in Nicaragua)</option>
+                    <option value="OFFCB">OFFCB (Caribbean)</option>
+                    <option value="CHEG">CHEG (Chemical Engineering)</option>
+                    <option value="CHEM">CHEM (Chemistry)</option>
+                    <option value="CHIN">CHIN (Chinese)</option>
+                    <option value="CEEG">CEEG (Civil & Environmental Engr.)</option>
+                    <option value="CLAS">CLAS (Classics)</option>
+                    <option value="CSCI">CSCI (Computer Science)</option>
+                    <option value="ENCW">ENCW (Creative Writing)</option>
+                    <option value="DANC">DANC (Dance)</option>
+                    <option value="OFFDN">OFFDN (Denmark Program)</option>
+                    <option value="EAST">EAST (East Asian Studies)</option>
+                    <option value="ECON">ECON (Economics)</option>
+                    <option value="EDUC">EDUC (Education)</option>
+                    <option value="ECEG">ECEG (Electrical & Computer Engr.)</option>
+                    <option value="ENGR">ENGR (Engineering)</option>
+                    <option value="ENGL">ENGL (English)</option>
+                    <option value="ENST">ENST (Environmental Studies)</option>
+                    <option value="ENFS">ENFS (Film/Media Studies)</option>
+                    <option value="FOUN">FOUN (Foundation Seminar)</option>
+                    <option value="FREN">FREN (French)</option>
+                    <option value="GEOG">GEOG (Geography)</option>
+                    <option value="GEOL">GEOL (Geology)</option>
+                    <option value="GRMN">GRMN (German)</option>
+                    <option value="GLBM">GLBM (Global Management)</option>
+                    <option value="GREK">GREK (Greek)</option>
+                    <option value="HEBR">HEBR (Hebrew)</option>
+                    <option value="HIST">HIST (History)</option>
+                    <option value="HUMN">HUMN (Humanities)</option>
+                    <option value="IDPT">IDPT (Interdepartmental)</option>
+                    <option value="IREL">IREL (International Relations)</option>
+                    <option value="ITAL">ITAL (Italian)</option>
+                    <option value="OFFJP">OFFJP (Japan)</option>
+                    <option value="JAPN">JAPN (Japanese)</option>
+                    <option value="LATN">LATN (Latin)</option>
+                    <option value="LAMS">LAMS (Latin American Studies)</option>
+                    <option value="LEGL">LEGL (Legal Studies)</option>
+                    <option value="LING">LING (Linguistics)</option>
+                    <option value="ENLS">ENLS (Literary Studies)</option>
+                    <option value="MGMT">MGMT (Management)</option>
+                    <option value="MSUS">MSUS (Managing for Sustainability)</option>
+                    <option value="MIDE">MIDE (Markets, Innovation & Design)</option>
+                    <option value="MATH">MATH (Mathematics)</option>
+                    <option value="MECH">MECH (Mechanical Engineering)</option>
+                    <option value="MILS">MILS (Military Science)</option>
+                    <option value="MUSC">MUSC (Music)</option>
+                    <option value="NEUR">NEUR (Neuroscience)</option>
+                    <option value="OCST">OCST (Off Campus Study)</option>
+                    <option value="PHIL">PHIL (Philosophy)</option>
+                    <option value="PHYS">PHYS (Physics)</option>
+                    <option value="POLS">POLS (Political Science)</option>
+                    <option value="PSYC">PSYC (Psychology)</option>
+                    <option value="RELI">RELI (Religion)</option>
+                    <option value="RESC">RESC (Residential Colleges)</option>
+                    <option value="RUSS">RUSS (Russian)</option>
+                    <option value="SIGN">SIGN (Sign Language)</option>
+                    <option value="SOCI">SOCI (Sociology)</option>
+                    <option value="SPAN">SPAN (Spanish)</option>
+                    <option value="SLIF">SLIF (Student Life)</option>
+                    <option value="THEA">THEA (Theatre)</option>
+                    <option value="UNIV">UNIV (University Course)</option>
+                    <option value="WMST">WMST (Women's and Gender Studies)</option>
+                  </FormControl>
+                </FormGroup>
+              </div>
 
-              {/* <FormGroup controlId="formInlineDays" onChange={this.handleDepartmentChange} validationState={this.getDepartmentValidationState()}>
-              <ControlLabel>Department</ControlLabel>
-              <FormControl type="text" placeholder="Department: ACFM, CSCI, etc." />
-            </FormGroup> */}
-
-              <FormGroup controlId="formInlineDays" onChange={this.handleProfessorChange} validationState={this.getProfessorValidationState()}>
-                <ControlLabel>Professor</ControlLabel>
-                <FormControl type="text" placeholder="Professor Last Name" />
-              </FormGroup>
-
-              {/* <FormGroup controlId="formInlineDays" onChange={this.handleDaysChange} validationState={this.getDayValidationState()}>
-                <ControlLabel>Course Days</ControlLabel>
-                <FormControl type="text" placeholder="Days: M, T, W, R, F, MWF, MW, TR" />
-              </FormGroup> */}
+              <div className="textInput">
+                <FormGroup controlId="formInlineDays" onChange={this.handleProfessorChange} validationState={this.getProfessorValidationState()}>
+                  <ControlLabel>Professor</ControlLabel>
+                  <FormControl type="text" placeholder="Professor Last Name" />
+                </FormGroup>
+              </div>
 
               <Button type="submit">Search</Button>
 
@@ -402,7 +324,6 @@ export default class CourseForm extends Component {
         : null
         }
 
-        {/* <div className="load"> */}
         {
             ((this.state.loading) && (this.state.selectedCourses.length === 0))
             ?
@@ -419,7 +340,6 @@ export default class CourseForm extends Component {
             </div>
             : null
         }
-      {/* </div> */}
 
         {
           this.state.selectedCourses.length !== 0
